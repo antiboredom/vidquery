@@ -28,7 +28,6 @@ def listvideos():
     parsers = vidquery.get_video_parsers()
     vidspans = {}
     for parser in parsers:
-        print(parser)
         vid_id, parser_id, name, cat, subcat = parser
         if vid_id not in vidspans:
             vidspans[vid_id] = []

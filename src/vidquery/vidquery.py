@@ -240,7 +240,6 @@ def analyze(parser_name: str, videopaths: list[str]) -> None:
         vid = get_or_make_video(vidpath)
         if vid:
             results = all_parsers[parser_name]["module"].process(vidpath)
-            print(results)
             for name, cat, subcat, clips in results:
                 save_clips(vid.id, name, cat, subcat, clips)
 
