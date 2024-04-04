@@ -1,0 +1,35 @@
+[project]
+name = "vidquery"
+version = "0.1.0"
+description = "Search video archives for dialog, faces, objects and more."
+authors = [
+    { name = "Sam Lavigne", email = "splavigne@gmail.com" }
+]
+dependencies = [
+    "sqlalchemy>=2.0.29",
+    "moviepy>=1.0.3",
+    "pyparsing>=3.1.2",
+    "videogrep>=2.2.1",
+    "scenedetect[opencv]>=0.6.3",
+    "vosk>=0.3.44",
+    "rich>=13.7.1",
+]
+readme = "README.md"
+requires-python = ">= 3.8"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.rye]
+managed = true
+dev-dependencies = []
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/vidquery"]
+
+[project.scripts]
+vidquery = 'vidquery:cli.cli'
