@@ -1,9 +1,20 @@
 import argparse
 import os
+import subprocess
 from rich.console import Console
 from rich.table import Table
 from . import vidquery
 from . import gui
+
+
+def preview_edl(clips):
+    lines = []
+    for c in clips:
+        lines.append(f"{c.video.path},{c.start},{c.end-c.start}")
+
+    edl = "edl://" + ";".join(lines)
+
+    subprocess.run(["mpv", edl])
 
 
 def listvideos():
@@ -53,7 +64,12 @@ def cli():
     )
 
     parser.add_argument(
-        "--gui", required=False, action="store_true", help="Open the graphic interface."
+        "--input",
+        "-i",
+        dest="input",
+        nargs="*",
+        required=False,
+        help="Video file or files.",
     )
 
     parser.add_argument("--search", "-s", required=False, help="Search through videos.")
@@ -61,12 +77,12 @@ def cli():
     parser.add_argument("--analyze", "-a", required=False, help="Analyze videos.")
 
     parser.add_argument(
-        "--input",
-        "-i",
-        dest="input",
-        nargs="*",
+        "--preview",
+        "-p",
         required=False,
-        help="Video file or files.",
+        action="store_true",
+        default=False,
+        help="Preview clips in MPV player.",
     )
 
     parser.add_argument(
@@ -87,6 +103,10 @@ def cli():
         default=False,
     )
 
+    parser.add_argument(
+        "--gui", required=False, action="store_true", help="Open the graphic interface."
+    )
+
     args = parser.parse_args()
 
     if args.listparsers:
@@ -103,11 +123,15 @@ def cli():
         if args.input:
             input = args.input
         results = vidquery.search(args.search, input)
+
         if results is None:
             print("no results found")
         else:
             for r in results:
                 print(f"{r.video.path}: {r.start} -> {r.end} {r.content}")
+
+            if args.preview:
+                preview_edl(results)
 
     if args.analyze and args.input:
         if args.analyze == "all":
