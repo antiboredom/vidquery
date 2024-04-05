@@ -103,6 +103,33 @@ def get_or_make_video(path: str) -> Video | None:
     return video
 
 
+def get_scenes(videopath: str) -> list[Clip]:
+    video = get_or_make_video(videopath)
+    if video is None:
+        return []
+
+    with SessionLocal() as s:
+        scenes = (
+            s.query(Clip)
+            .join(Clip.parser)
+            .filter(Clip.video_id == video.id, Parser.name == "scenedetect")
+            .all()
+        )
+
+    if len(scenes) > 0:
+        return scenes
+
+    analyze("scenedetect", [videopath])
+    with SessionLocal() as s:
+        scenes = (
+            s.query(Clip)
+            .join(Clip.parser)
+            .filter(Clip.video_id == video.id, Parser.name == "scenedetect")
+            .all()
+        )
+    return scenes
+
+
 def save_clips(
     video_id: int, name: str, cat: str, subcat: str, clips: list[Clip]
 ) -> None:

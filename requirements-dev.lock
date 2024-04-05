@@ -20,26 +20,48 @@ click==8.1.7
     # via scenedetect
 decorator==4.4.2
     # via moviepy
+filelock==3.13.3
+    # via huggingface-hub
+    # via torch
+    # via transformers
+fsspec==2024.3.1
+    # via huggingface-hub
+    # via torch
+huggingface-hub==0.22.2
+    # via tokenizers
+    # via transformers
 idna==3.6
     # via requests
 imageio==2.34.0
     # via moviepy
 imageio-ffmpeg==0.4.9
     # via moviepy
+jinja2==3.1.3
+    # via torch
 markdown-it-py==3.0.0
     # via rich
+markupsafe==2.1.5
+    # via jinja2
 mdurl==0.1.2
     # via markdown-it-py
 moviepy==1.0.3
     # via videogrep
     # via vidquery
+mpmath==1.3.0
+    # via sympy
+networkx==3.2.1
+    # via torch
 numpy==1.26.4
     # via imageio
     # via moviepy
     # via opencv-python
     # via scenedetect
+    # via transformers
 opencv-python==4.9.0.80
     # via scenedetect
+packaging==24.0
+    # via huggingface-hub
+    # via transformers
 pillow==10.3.0
     # via imageio
 platformdirs==4.2.0
@@ -52,11 +74,20 @@ pygments==2.17.2
     # via rich
 pyparsing==3.1.2
     # via vidquery
+pyyaml==6.0.1
+    # via huggingface-hub
+    # via transformers
+regex==2023.12.25
+    # via transformers
 requests==2.31.0
+    # via huggingface-hub
     # via moviepy
+    # via transformers
     # via vosk
 rich==13.7.1
     # via vidquery
+safetensors==0.4.2
+    # via transformers
 scenedetect==0.6.3
     # via vidquery
 setuptools==69.2.0
@@ -67,13 +98,25 @@ sqlalchemy==2.0.29
     # via vidquery
 srt==3.5.3
     # via vosk
+sympy==1.12
+    # via torch
+tokenizers==0.15.2
+    # via transformers
+torch==2.2.2
+    # via vidquery
 tqdm==4.66.2
+    # via huggingface-hub
     # via moviepy
     # via proglog
     # via scenedetect
+    # via transformers
     # via vosk
+transformers==4.39.3
+    # via vidquery
 typing-extensions==4.10.0
+    # via huggingface-hub
     # via sqlalchemy
+    # via torch
 urllib3==2.2.1
     # via requests
 videogrep==2.2.1
