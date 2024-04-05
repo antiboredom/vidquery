@@ -54,6 +54,9 @@ class VideoParser(Base):
     video_id: Mapped[int] = mapped_column(Integer, ForeignKey("videos.id"))
     parser_id: Mapped[int] = mapped_column(Integer, ForeignKey("parsers.id"))
 
+    parser: Mapped["Parser"] = relationship("Parser")
+    video: Mapped["Video"] = relationship("Video")
+
 
 # class Video(Base):
 #     __tablename__ = "videos"

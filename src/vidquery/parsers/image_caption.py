@@ -1,4 +1,3 @@
-import os
 from moviepy.editor import VideoFileClip
 
 # from transformers import pipeline

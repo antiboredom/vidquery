@@ -76,6 +76,15 @@ def cli():
     parser.add_argument("--analyze", "-a", required=False, help="Analyze videos.")
 
     parser.add_argument(
+        "--overwrite",
+        "-ow",
+        required=False,
+        action="store_true",
+        default=False,
+        help="Overwrite existing parser results",
+    )
+
+    parser.add_argument(
         "--preview",
         "-p",
         required=False,
@@ -136,10 +145,10 @@ def cli():
         if args.analyze == "all":
             for parser in vidquery.get_installed_parsers():
                 print("Analyzing", parser)
-                vidquery.analyze(parser, args.input)
+                vidquery.analyze(parser, args.input, args.overwrite)
         else:
             print("Analyzing", args.analyze)
-            vidquery.analyze(args.analyze, args.input)
+            vidquery.analyze(args.analyze, args.input, args.overwrite)
 
 
 if __name__ == "__main__":

@@ -262,13 +262,49 @@ def get_installed_parsers() -> dict:
     return out
 
 
-def analyze(parser_name: str, videopaths: list[str]) -> None:
+def analyze(parser_name: str, videopaths: list[str], overwrite: bool = False) -> None:
     for vidpath in videopaths:
         vid = get_or_make_video(vidpath)
-        if vid:
-            results = all_parsers[parser_name]["module"].process(vidpath)
-            for name, cat, subcat, clips in results:
-                save_clips(vid.id, name, cat, subcat, clips)
+
+        if vid is None:
+            print("Video not found")
+            continue
+
+        with SessionLocal() as s:
+            parser_count = (
+                s.query(VideoParser)
+                .join(Parser)
+                .filter(
+                    VideoParser.video_id == vid.id,
+                    Parser.name == parser_name,
+                )
+                .count()
+            )
+
+        if parser_count > 0 and not overwrite:
+            print("Parser already run on video, specify overwrite rerun")
+            continue
+
+        if parser_count > 0 and overwrite:
+            with SessionLocal() as s:
+                parser_ids = [
+                    p.id
+                    for p in s.query(Parser).filter(Parser.name == parser_name).all()
+                ]
+                s.query(Clip).filter(
+                    Clip.video_id == vid.id, Clip.parser_id.in_(parser_ids)
+                ).delete()
+
+                s.query(VideoParser).filter(
+                    VideoParser.video_id == vid.id,
+                    VideoParser.parser_id.in_(parser_ids),
+                ).delete()
+
+                s.commit()
+
+        results = all_parsers[parser_name]["module"].process(vidpath)
+        for name, cat, subcat, clips in results:
+            save_clips(vid.id, name, cat, subcat, clips)
 
 
 def search(query: str, videos=[]) -> list[Clip]:
