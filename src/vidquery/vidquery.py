@@ -262,7 +262,8 @@ def get_installed_parsers() -> dict:
     return out
 
 
-def analyze(parser_name: str, videopaths: list[str], overwrite: bool = False) -> None:
+def analyze(parser_name: str, videopaths: list[str], overwrite: bool = False) -> list:
+    all_results = []
     for vidpath in videopaths:
         vid = get_or_make_video(vidpath)
 
@@ -305,6 +306,9 @@ def analyze(parser_name: str, videopaths: list[str], overwrite: bool = False) ->
         results = all_parsers[parser_name]["module"].process(vidpath)
         for name, cat, subcat, clips in results:
             save_clips(vid.id, name, cat, subcat, clips)
+        all_results += results
+
+    return all_results
 
 
 def search(query: str, videos=[]) -> list[Clip]:
