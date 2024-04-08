@@ -262,6 +262,19 @@ def get_installed_parsers() -> dict:
     return out
 
 
+def get_analyzer_options(content: str) -> dict:
+    parts = content.strip().split(":")
+    out = {"name": parts[0].strip()}
+    if len(parts) == 1:
+        return out
+
+    for p in parts[1:]:
+        key, value = p.split("=")
+        out[key.strip()] = value.strip()
+
+    return out
+
+
 def analyze(parser_name: str, videopaths: list[str], overwrite: bool = False) -> list:
     all_results = []
     for vidpath in videopaths:
