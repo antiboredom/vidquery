@@ -10,6 +10,8 @@
 -e file:.
 beautifulsoup4==4.12.3
     # via videogrep
+bottle==0.12.25
+    # via pywebview
 certifi==2024.2.2
     # via requests
 cffi==1.16.0
@@ -68,11 +70,28 @@ platformdirs==4.2.0
     # via scenedetect
 proglog==0.1.10
     # via moviepy
+proxy-tools==0.1.0
+    # via pywebview
 pycparser==2.22
     # via cffi
 pygments==2.17.2
     # via rich
+pyobjc-core==10.2
+    # via pyobjc-framework-cocoa
+    # via pyobjc-framework-security
+    # via pyobjc-framework-webkit
+    # via pywebview
+pyobjc-framework-cocoa==10.2
+    # via pyobjc-framework-security
+    # via pyobjc-framework-webkit
+    # via pywebview
+pyobjc-framework-security==10.2
+    # via pywebview
+pyobjc-framework-webkit==10.2
+    # via pywebview
 pyparsing==3.1.2
+    # via vidquery
+pywebview==5.0.5
     # via vidquery
 pyyaml==6.0.1
     # via huggingface-hub
@@ -115,6 +134,7 @@ transformers==4.39.3
     # via vidquery
 typing-extensions==4.10.0
     # via huggingface-hub
+    # via pywebview
     # via sqlalchemy
     # via torch
 urllib3==2.2.1

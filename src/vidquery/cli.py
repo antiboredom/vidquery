@@ -4,7 +4,6 @@ import subprocess
 from rich.console import Console
 from rich.table import Table
 from . import vidquery
-from . import gui
 
 
 def preview_edl(clips):
@@ -124,6 +123,8 @@ def cli():
         listvideos()
 
     if args.gui:
+        from . import gui
+
         gui.gui()
 
     if args.search:
