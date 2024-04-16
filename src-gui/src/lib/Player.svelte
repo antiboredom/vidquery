@@ -48,7 +48,34 @@
     }
     frame = requestAnimationFrame(step);
   }
+
+  function basename(path) {
+    return path.split(/[\\/]/).pop();
+  }
 </script>
 
-<button on:click={previewEdl}>Open in MPV</button>
-<video bind:this={video} on:play={start} controls></video>
+<div class="player">
+  <div class="vid-holder">
+    <video bind:this={video} on:play={start} controls></video>
+    <button on:click={previewEdl}>Open in MPV</button>
+  </div>
+  <div class="clip-list">
+    {#each clips as clip}
+      <div class="clip-content">
+        <span class="name">{basename(clip.path)}</span>
+        <span class="time">{clip.start} -> {clip.end}:</span>
+        <span class="content">{clip.content}</span>
+      </div>
+    {/each}
+  </div>
+</div>
+
+<style>
+  video {
+    width: 500px;
+  }
+  .player {
+    display: grid;
+    grid-template-columns: 500px 1fr;
+  }
+</style>

@@ -35,12 +35,6 @@
     {#if searchResults.length > 0}
       <Player clips={searchResults} />
     {/if}
-    {#each searchResults as clip}
-      <div>{clip.path} [{clip.start} -> {clip.end}]: {clip.content}</div>
-    {/each}
-    <!-- {#each videos as video} -->
-    <!--   <video src="file://{video.path}" controls></video> -->
-    <!-- {/each} -->
   </div>
 </main>
 
